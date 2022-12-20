@@ -5,7 +5,6 @@ createApp({
     return {
       search: '',
       newTask: '',
-      edit: false,
       undo: [],
       tasks: [
         {
