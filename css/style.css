@@ -54,6 +54,6 @@ div .myEditBtn{
   height: 50px;
   position: absolute;
   left: calc(50% - 250px);
-  top: 50%;
+  top: calc(50% - 40px);
   border-radius: 20px;
 }
