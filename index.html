@@ -17,37 +17,50 @@
 </head>
 <body>
   <div id="app" class="d-flex flex-column align-items-center gap-4">
+    <!-- Modal -->
     <template v-for="(task, index) in searchTasks">
       <div class="myModal" v-if="task.edit">
       </div>
       <input class="form-control" type="text" placeholder="Search a task" v-model="task.description" v-if="task.edit" @keyup.enter="editTask(task)">
     </template>
+
+    <!-- Header -->
     <header class="d-flex flex-row w-100 p-3 bg-primary text-white">
       <h1>Todolist</h1>
       <div class="d-flex align-items-center" id="search-bar">
         <input class="form-control" type="text" placeholder="Search a task" v-model="search">
       </div>
     </header>
+
+    <!-- Card -->
     <div class="card p-4 d-flex flex-column gap-4">
+      <!-- Undo button -->
       <div>
         <button type="button" class="btn" :class="(undo.length == 0) ? 'btn-outline-secondary' : ' btn-outline-primary'" @click="undoTask"><i class="fa-solid fa-rotate-left"></i></i></button>
       </div>
+      <!-- Todo list -->
       <div class="d-flex justify-content-between" v-for="(task, index) in searchTasks">
+        <!-- text of the task -->
          <div class="d-flex align-items-center">
            <span id="text" :class="(task.done) ? 'green' : ''" @click="taskIsDone(index)">
              {{task.description}}
            </span>
          </div>
+         <!-- buttons section -->
          <div class="d-flex gap-2">
+          <!-- taskIsDone button -->
           <button type="button" class="btn btn-outline-success mySuccessBtn" v-if="!task.done" @click="taskIsDone(index)"><i class="fa-solid fa-check"></i></button>
           <button type="button" class="btn btn-success mySuccessBtn" v-else @click="taskIsDone(index)"><i class="fa-solid fa-check"></i></button>
 
+          <!-- Edit button -->
           <button type="button" class="btn btn-outline-warning myEditBtn" @click="editTask(task)"><i class="fa-regular fa-pen-to-square"></i></button>
 
+          <!-- Delete button -->
           <button type="button" class="btn btn-danger myDangerBtn" @click="deleteTask(task, index)"><i class="fa-solid fa-xmark"></i></button>
          </div>
       </div>
     </div>
+    <!-- Add a new task button -->
     <div class="w-25">
       <input type="text" placeholder="Add a new task" class="form-control" v-model="newTask" @keyup.enter="addTask">
     </div>
