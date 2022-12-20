@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap css cdn link-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+  <!-- Fontawesome cdn link-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- My css file -->
+  <link rel="stylesheet" href="./css/style.css">
+  <title>vue-todolist</title>
+</head>
+<body>
+  <div id="app" class="d-flex flex-column align-items-center gap-4">
+    <template v-for="(task, index) in searchTasks">
+      <div class="myModal" v-if="task.edit">
+      </div>
+      <input class="form-control" type="text" placeholder="Search a task" v-model="task.description" v-if="task.edit" @keyup.enter="editTask(task)">
+    </template>
+    <header class="d-flex flex-row w-100 p-3 bg-primary text-white">
+      <h1>Todolist</h1>
+      <div class="d-flex align-items-center" id="search-bar">
+        <input class="form-control" type="text" placeholder="Search a task" v-model="search">
+      </div>
+    </header>
+    <div class="card p-4 d-flex flex-column gap-4">
+      <div>
+        <button type="button" class="btn" :class="(undo.length == 0) ? 'btn-outline-secondary' : ' btn-outline-primary'" @click="undoTask"><i class="fa-solid fa-rotate-left"></i></i></button>
+      </div>
+      <div class="d-flex justify-content-between" v-for="(task, index) in searchTasks">
+         <div class="d-flex align-items-center">
+           <span id="text" :class="(task.done) ? 'green' : ''" @click="taskIsDone(index)">
+             {{task.description}}
+           </span>
+         </div>
+         <div class="d-flex gap-2">
+          <button type="button" class="btn btn-outline-success mySuccessBtn" v-if="!task.done" @click="taskIsDone(index)"><i class="fa-solid fa-check"></i></button>
+          <button type="button" class="btn btn-success mySuccessBtn" v-else @click="taskIsDone(index)"><i class="fa-solid fa-check"></i></button>
+
+          <button type="button" class="btn btn-outline-warning myEditBtn" @click="editTask(task)"><i class="fa-regular fa-pen-to-square"></i></button>
+
+          <button type="button" class="btn btn-danger myDangerBtn" @click="deleteTask(task, index)"><i class="fa-solid fa-xmark"></i></button>
+         </div>
+      </div>
+    </div>
+    <div class="w-25">
+      <input type="text" placeholder="Add a new task" class="form-control" v-model="newTask" @keyup.enter="addTask">
+    </div>
+  </div>
+  
+  <!-- Vuejs cdn link-->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- My vuejs file -->
+  <script type="text/javascript" src="./js/script.js"></script>
+</body>
+</html>
