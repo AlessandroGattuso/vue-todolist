@@ -61,15 +61,19 @@ createApp({
     taskIsDone(index){
       this.tasks[index].done = (!this.tasks[index].done) ? true : false;
     },
-    editTask(index){ 
-        if(!this.tasks[index].edit){
-          this.editDescription = this.tasks[index].description;
-          this.tasks[index].edit = true
+    editTask(task){ 
+      this.tasks.map((item) => {
+        if(item.description == task.description){
+          if(!item.edit){
+            this.editDescription = item.description;
+            item.edit = true
+          }
+          else{
+            item.description = this.editDescription
+            item.edit = false
+          }
         }
-        else{
-          this.tasks[index].description = this.editDescription
-          this.tasks[index].edit = false
-        }
+      })
     },  
   }
 }).mount('#app');
