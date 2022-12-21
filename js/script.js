@@ -43,12 +43,18 @@ createApp({
   },
   methods: {
     addTask(){
-      this.tasks.push(
-        {
-          description: this.newTask,
-          done: false
-        }
-      )
+      let checkDuplicate = this.tasks.filter((task) => {
+        return task.description.toLowerCase().split(" ").join("") == this.newTask.toLowerCase().split(" ").join("");
+      });
+
+      if(this.newTask.split(" ").join("") != '' &&  checkDuplicate.length == 0){
+        this.tasks.push(
+          {
+            description: this.newTask,
+            done: false
+          }
+        )
+      }
       this.newTask = '';
     },
     deleteTask(task, index){
@@ -56,7 +62,8 @@ createApp({
       this.undo.push(task);
     },
     undoTask(){
-      this.tasks.push(this.undo.pop());
+      if(this.undo.length != 0)
+        this.tasks.push(this.undo.pop());
     },
     taskIsDone(index){
       this.tasks[index].done = (!this.tasks[index].done) ? true : false;
