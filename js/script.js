@@ -5,6 +5,7 @@ createApp({
     return {
       search: '',
       newTask: '',
+      editDescription: '',
       undo: [],
       tasks: [
         {
@@ -38,7 +39,7 @@ createApp({
           searchedTasks = this.tasks;
 
         return searchedTasks;
-      }
+      },
   },
   methods: {
     addTask(){
@@ -48,6 +49,7 @@ createApp({
           done: false
         }
       )
+      this.newTask = '';
     },
     deleteTask(task, index){
       this.tasks.splice(index, 1);
@@ -59,11 +61,15 @@ createApp({
     taskIsDone(index){
       this.tasks[index].done = (!this.tasks[index].done) ? true : false;
     },
-    editTask(t){
-      this.tasks.map((item) => {
-        if(item.description == t.description)
-          item.edit = (!item.edit) ? true : false;  
-      })
+    editTask(index){ 
+        if(!this.tasks[index].edit){
+          this.editDescription = this.tasks[index].description;
+          this.tasks[index].edit = true
+        }
+        else{
+          this.tasks[index].description = this.editDescription
+          this.tasks[index].edit = false
+        }
     },  
   }
 }).mount('#app');

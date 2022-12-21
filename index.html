@@ -21,7 +21,7 @@
     <template v-for="(task, index) in searchTasks">
       <div class="myModal" v-if="task.edit">
       </div>
-      <input class="form-control" type="text" placeholder="Search a task" v-model="task.description" v-if="task.edit" @keyup.enter="editTask(task)">
+      <input class="form-control" type="text" v-if="task.edit" v-model="editDescription" @keyup.enter="editTask(index)">
     </template>
 
     <!-- Header -->
@@ -53,7 +53,7 @@
           <button type="button" class="btn btn-success mySuccessBtn" v-else @click="taskIsDone(index)"><i class="fa-solid fa-check"></i></button>
 
           <!-- Edit button -->
-          <button type="button" class="btn btn-outline-warning myEditBtn" @click="editTask(task)"><i class="fa-regular fa-pen-to-square"></i></button>
+          <button type="button" class="btn btn-outline-warning myEditBtn" @click="editTask(index)"><i class="fa-regular fa-pen-to-square"></i></button>
 
           <!-- Delete button -->
           <button type="button" class="btn btn-danger myDangerBtn" @click="deleteTask(task, index)"><i class="fa-solid fa-xmark"></i></button>
