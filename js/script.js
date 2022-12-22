@@ -59,7 +59,16 @@ createApp({
     },
     deleteTask(task, index){
       this.tasks.splice(index, 1);
-      this.undo.push(task);
+      let trace = this.getStackTrace();
+      let flagEdit = false;
+      trace.forEach(el => {
+          if(el.includes('editTask')){
+            flagEdit = true; 
+          }
+        }
+      )
+      if(!flagEdit) 
+          this.undo.push(task);
     },
     undoTask(){
       if(this.undo.length != 0)
@@ -84,5 +93,18 @@ createApp({
         }
       })
     },  
+    getStackTrace () {
+      let stack;
+    
+      try {
+        throw new Error('');
+      }
+      catch (error) {
+        stack = error.stack || '';
+      }
+    
+      stack = stack.split('\n').map(function (line) { return line.trim(); });
+      return stack.splice(stack[0] == 'Error' ? 2 : 1);
+    }
   }
 }).mount('#app');
