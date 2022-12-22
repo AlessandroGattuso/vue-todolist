@@ -68,7 +68,7 @@ createApp({
     taskIsDone(index){
       this.tasks[index].done = (!this.tasks[index].done) ? true : false;
     },
-    editTask(task){ 
+    editTask(task, i){ 
       this.tasks.map((item) => {
         if(item.description == task.description){
           if(!item.edit){
@@ -77,6 +77,8 @@ createApp({
           }
           else{
             item.description = this.editDescription
+            if(this.editDescription == '')
+              this.deleteTask(task,i)
             item.edit = false
           }
         }
